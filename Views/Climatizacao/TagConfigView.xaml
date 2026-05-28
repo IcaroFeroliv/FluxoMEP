@@ -1,0 +1,88 @@
+﻿<Window x:Class="AirConditioningClash.Views.Climatizacao.TagConfigView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuração de Detalhamento HVAC" Height="550" Width="420"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Configurações de Tags" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+            <GroupBox Header="O que você vai detalhar?" Margin="0,0,0,10">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton x:Name="rbPipes" Content="Tubulações" IsChecked="True" Margin="0,0,20,0" Checked="OnCategoryChanged"/>
+                    <RadioButton x:Name="rbEquipment" Content="Equipamentos Mecânicos" Checked="OnCategoryChanged"/>
+                    <RadioButton x:Name="rbDucts" Content="Dutos" Margin="20,0,20,0" Checked="OnCategoryChanged"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Estilo da Tag" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <TextBlock Text="Selecione a Família de Tag:"/>
+                    <ComboBox x:Name="cmbTagFamilies" Margin="0,5,0,0" DisplayMemberPath="Name"/>
+                    <CheckBox x:Name="chkLeader" Content="Criar Chamada de Detalhe (Leader)" IsChecked="True" Margin="0,10,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Direção da Tag" Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="5">
+                        <TextBlock Text="Horizontais (Y):" FontWeight="SemiBold"/>
+                        <RadioButton x:Name="rbTop" Content="Acima" Margin="0,5,0,0"/>
+                        <RadioButton x:Name="rbCenterHoriz" Content="Centro" Margin="0,5,0,0"/>
+                        <RadioButton x:Name="rbBottom" Content="Abaixo" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="5">
+                        <TextBlock Text="Verticais (X):" FontWeight="SemiBold"/>
+                        <RadioButton x:Name="rbRight" Content="Direita" Margin="0,5,0,0"/>
+                        <RadioButton x:Name="rbCenterVert" Content="Centro" Margin="0,5,0,0"/>
+                        <RadioButton x:Name="rbLeft" Content="Esquerda" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Distâncias (mm)" Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Dist. p/ Tubos Horizontais (Y):" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtOffsetHoriz" Text="500" Grid.Row="0" Grid.Column="1" Margin="5,0,0,5" ToolTip="Quanto a tag sobe ou desce."/>
+
+                    <TextBlock Text="Dist. p/ Tubos Verticais (X):" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtOffsetVert" Text="1000" Grid.Row="1" Grid.Column="1" Margin="5,0,0,5" ToolTip="Quanto a tag vai para o lado."/>
+
+                    <Separator Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5"/>
+
+                    <TextBlock Text="Espaçamento Empilhamento:" Grid.Row="3" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtStack" Text="150" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"/>
+
+                    <Separator Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5"/>
+
+                    <TextBlock Text="Comprimento Mínimo:" Grid.Row="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtMinLength" Text="500" Grid.Row="4" Grid.Column="1" Margin="5,5,0,0" ToolTip="Ignora tubos/dutos menores que este valor."/>
+
+                </Grid>
+            </GroupBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button x:Name="btnCancel" Content="Cancelar" Width="80" Height="25" Margin="0,0,10,0" Click="btnCancel_Click"/>
+                <Button x:Name="btnApply" Content="Aplicar" Width="100" Height="25" Click="btnApply_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

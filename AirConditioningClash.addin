@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Fluxo MEP</Name>
+    <Assembly>FluxoMEP\AirConditioningClash.dll</Assembly>
+    <AddInId>29E8AF92-10CA-4D2D-9944-CC1DE0044C06</AddInId> 
+    <FullClassName>AirConditioningClash.App</FullClassName> 
+    <VendorId>Icaro Ferreira</VendorId>
+    <VendorDescription>Ajuda no projetos MEP</VendorDescription>
+  </AddIn>
+</RevitAddIns>

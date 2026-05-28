@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Configurations>Revit2025;Revit2026</Configurations>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Platforms>x64</Platforms>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<OutputPath>bin\x64\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Revit2025'">
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<RevitVersion>2025</RevitVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Revit2026'">
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<RevitVersion>2026</RevitVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ClosedXML" Version="0.102.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Resources\*.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<Target Name="DeployParaRevit" AfterTargets="Build">
+		<PropertyGroup>
+			<RevitAddinsFolder>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\FluxoMEP</RevitAddinsFolder>
+			<RevitManifestFolder>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</RevitManifestFolder>
+			<ResourcesFolder>$(RevitAddinsFolder)\Resources</ResourcesFolder>
+		</PropertyGroup>
+
+		<Message Text="Iniciando cópia automática dos arquivos para o Revit $(RevitVersion)..." Importance="High" />
+
+		<Copy SourceFiles="$(ProjectDir)AirConditioningClash.addin" DestinationFolder="$(RevitManifestFolder)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(RevitAddinsFolder)" />
+		<Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(RevitAddinsFolder)" />
+
+		<ItemGroup>
+			<ClosedXMLDependencies Include="$(TargetDir)*.dll" Exclude="$(TargetDir)$(TargetName).dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(ClosedXMLDependencies)" DestinationFolder="$(RevitAddinsFolder)" SkipUnchangedFiles="false" />
+
+		<MakeDir Directories="$(ResourcesFolder)" />
+		<ItemGroup>
+			<ResourceFiles Include="$(TargetDir)Resources\**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(ResourcesFolder)" />
+
+		<Message Text="Deploy local concluído com sucesso!" Importance="High" />
+	</Target>
+
+</Project>

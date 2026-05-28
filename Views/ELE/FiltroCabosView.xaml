@@ -1,0 +1,163 @@
+<Window x:Class="AirConditioningClash.Views.ELE.FiltroCabosView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Exportar Lista de Cabos — Fluxo MEP"
+        Width="420"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F4F4"
+        FontFamily="Segoe UI"
+        FontSize="13"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Accent"      Color="#0078D4"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#106EBE"/>
+        <SolidColorBrush x:Key="AccentPress" Color="#005A9E"/>
+        <SolidColorBrush x:Key="TextMain"    Color="#1B1B1B"/>
+        <SolidColorBrush x:Key="TextMuted"   Color="#767676"/>
+        <SolidColorBrush x:Key="LineBorder"  Color="#D1D1D1"/>
+        <SolidColorBrush x:Key="Surface"     Color="#FFFFFF"/>
+
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Accent}"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Padding"         Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentPress}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#A0A0A0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BtnSecondary" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Surface}"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMain}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource LineBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Padding"         Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#EBEBEB"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#DEDEDE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+            <Setter Property="Cursor"     Value="Hand"/>
+        </Style>
+
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <StackPanel>
+
+        <!-- Cabeçalho -->
+        <Border Background="{StaticResource Surface}"
+                BorderBrush="{StaticResource LineBorder}"
+                BorderThickness="0,0,0,1"
+                Padding="20,16">
+            <StackPanel>
+                <TextBlock Text="Exportar Lista de Cabos"
+                           FontSize="17"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextMain}"/>
+                <TextBlock Text="Configure as opções de exportação."
+                           FontSize="12"
+                           Foreground="{StaticResource TextMuted}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Corpo -->
+        <StackPanel Margin="20,20,20,20">
+
+            <TextBlock Text="Deseja aplicar algum filtro?"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource TextMain}"
+                       Margin="0,0,0,14"/>
+
+            <RadioButton Content="Não — exportar todos os conduites e bandejas"
+                         IsChecked="{Binding NaoAplicarFiltro}"
+                         Margin="0,0,0,10"/>
+
+            <RadioButton Content="Sim — filtrar pela fase criada"
+                         IsChecked="{Binding AplicarFiltro}"
+                         Margin="0,0,0,0"/>
+
+            <!-- Seleção de fase (aparece apenas quando filtro está ativo) -->
+            <Border Visibility="{Binding FiltroVisivel, Converter={StaticResource BoolToVis}}"
+                    Background="White"
+                    BorderBrush="{StaticResource LineBorder}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="14,12"
+                    Margin="0,14,0,0">
+                <StackPanel>
+                    <TextBlock Text="Fase criada:"
+                               FontSize="12"
+                               Foreground="{StaticResource TextMuted}"
+                               Margin="0,0,0,8"/>
+                    <ComboBox ItemsSource="{Binding Fases}"
+                              SelectedItem="{Binding FaseSelecionada}"
+                              DisplayMemberPath="Name"
+                              Height="32"
+                              Padding="8,0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+        <!-- Rodapé -->
+        <Border Background="{StaticResource Surface}"
+                BorderBrush="{StaticResource LineBorder}"
+                BorderThickness="0,1,0,0"
+                Padding="16,12">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar"
+                        Style="{StaticResource BtnSecondary}"
+                        Margin="0,0,8,0"
+                        Command="{Binding CancelarCommand}"/>
+                <Button Content="Exportar"
+                        Style="{StaticResource BtnPrimary}"
+                        Command="{Binding ExportarCommand}"/>
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+</Window>

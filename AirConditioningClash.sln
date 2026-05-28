@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirConditioningClash", "AirConditioningClash.csproj", "{CA16E916-7DD9-7FEA-5E72-B35D7F7CCA08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Revit2025|x64 = Revit2025|x64
+		Revit2026|x64 = Revit2026|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA16E916-7DD9-7FEA-5E72-B35D7F7CCA08}.Revit2025|x64.ActiveCfg = Revit2025|x64
+		{CA16E916-7DD9-7FEA-5E72-B35D7F7CCA08}.Revit2025|x64.Build.0 = Revit2025|x64
+		{CA16E916-7DD9-7FEA-5E72-B35D7F7CCA08}.Revit2026|x64.ActiveCfg = Revit2026|x64
+		{CA16E916-7DD9-7FEA-5E72-B35D7F7CCA08}.Revit2026|x64.Build.0 = Revit2026|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B981198C-2ED2-43D6-8504-1AECF977E00A}
+	EndGlobalSection
+EndGlobal

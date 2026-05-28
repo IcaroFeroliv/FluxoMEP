@@ -1,0 +1,108 @@
+﻿<Window x:Class="AirConditioningClash.Views.HID.Tag3DHIDConfigView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tags 3D / Corte - Hidrossanitário" Height="750" Width="500"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Tags a inserir -->
+                <TextBlock Text="Selecione as Tags:" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <CheckBox x:Name="chkDiametro" Content="Inserir Diâmetro"
+                          IsChecked="True" FontWeight="Bold" Margin="0,5,0,2"
+                          Checked="chk_Checked" Unchecked="chk_Checked"/>
+                <ComboBox x:Name="cmbDiametro" Margin="0,0,0,10" Height="25"
+                          DisplayMemberPath="Name"/>
+
+                <CheckBox x:Name="chkInclinacao" Content="Inserir Inclinação"
+                          IsChecked="True" FontWeight="Bold" Margin="0,5,0,2"
+                          Checked="chk_Checked" Unchecked="chk_Checked"/>
+                <ComboBox x:Name="cmbInclinacao" Margin="0,0,0,10" Height="25"
+                          DisplayMemberPath="Name"/>
+
+                <CheckBox x:Name="chkSentido" Content="Inserir Sentido de Fluxo"
+                          IsChecked="False" FontWeight="Bold" Margin="0,5,0,2"
+                          Checked="chk_Checked" Unchecked="chk_Checked"/>
+                <ComboBox x:Name="cmbSentido" Margin="0,0,0,10" Height="25"
+                          DisplayMemberPath="Name" IsEnabled="False"/>
+
+                <CheckBox x:Name="chkConexao" Content="Inserir Tag em Conexões"
+                          IsChecked="False" FontWeight="Bold" Margin="0,5,0,2"
+                          Checked="chk_Checked" Unchecked="chk_Checked"/>
+                <ComboBox x:Name="cmbConexao" Margin="0,0,0,10" Height="25"
+                          DisplayMemberPath="Name" IsEnabled="False"/>
+
+                <Separator Margin="0,10"/>
+
+                <!-- Posição -->
+                <TextBlock Text="Posição (referência para 1 tag, ou lado inicial para várias):"
+                           FontWeight="Bold" Margin="0,0,0,5" TextWrapping="Wrap"/>
+                <RadioButton x:Name="rbCima" Content="Cima / Esquerda (Padrão)"
+                             IsChecked="True" GroupName="Posicao" Margin="0,2"/>
+                <RadioButton x:Name="rbBaixo" Content="Baixo / Direita"
+                             GroupName="Posicao" Margin="0,2"/>
+
+                <Separator Margin="0,10"/>
+
+                <!-- Ajustes Geométricos -->
+                <TextBlock Text="Ajustes Geométricos (cm):" FontWeight="Bold" Margin="0,0,0,5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Distância da Tag:"
+                               VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtDistancia" Grid.Row="0" Grid.Column="1"
+                             Height="22" Margin="0,2" Text="30"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Ignorar tubos menores que:"
+                               VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtComprimentoMin" Grid.Row="1" Grid.Column="1"
+                             Height="22" Margin="0,2" Text="75"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Espaçamento entre Tags (Lado a Lado):"
+                               VerticalAlignment="Center"
+                               ToolTip="Se 0, alterna lados (cima/baixo). Se maior que 0, todas no mesmo lado, separadas por essa distância ao longo do tubo."/>
+                    <TextBox x:Name="txtEspacamentoLong" Grid.Row="2" Grid.Column="1"
+                             Height="22" Margin="0,2" Text="0"/>
+                </Grid>
+
+                <Separator Margin="0,10"/>
+
+                <!-- Filtro Avançado -->
+                <TextBlock Text="Filtro Avançado:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <CheckBox x:Name="chkFiltrarSistema" Content="Filtrar por Workset específico?"
+                          Margin="0,2" Checked="chkFiltrarSistema_Changed" Unchecked="chkFiltrarSistema_Changed"/>
+                <ComboBox x:Name="cmbSistemas" Margin="0,5,0,10" Height="25" IsEnabled="False"
+                          DisplayMemberPath="Name"/>
+
+                <Separator Margin="0,5"/>
+                
+                <CheckBox x:Name="chkSelecaoManual" Content="Selecionar tubos manualmente"
+                          FontWeight="Bold" Margin="0,5"
+                          ToolTip="Se marcado, ao executar você escolherá os tubos um a um na vista. Caso contrário, todos os tubos visíveis na vista serão considerados."/>
+
+
+
+                <CheckBox x:Name="chkLeader" Content="Tag com leader (linha de chamada)"
+                          IsChecked="True" Margin="0,5"/>
+
+                <!-- Botões -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button Content="Cancelar" Width="80" Height="25" Margin="0,0,5,0"
+                            Click="btnCancel_Click"/>
+                    <Button Content="Executar" Width="80" Height="25"
+                            Click="btnExecutar_Click" IsDefault="True"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

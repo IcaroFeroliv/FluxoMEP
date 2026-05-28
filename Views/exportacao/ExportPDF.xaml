@@ -1,0 +1,460 @@
+﻿<Window x:Class="AirConditioningClash.Views.Climatizacao.ExportPDF"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Exportar PDF — Fluxo MEP"
+        Height="600" Width="540"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F4F4"
+        FontFamily="Segoe UI"
+        FontSize="13"
+        ResizeMode="CanResize">
+
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="Accent"      Color="#0078D4"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#106EBE"/>
+        <SolidColorBrush x:Key="AccentPress" Color="#005A9E"/>
+        <SolidColorBrush x:Key="TextMain"    Color="#1B1B1B"/>
+        <SolidColorBrush x:Key="TextMuted"   Color="#767676"/>
+        <SolidColorBrush x:Key="LineBorder"  Color="#D1D1D1"/>
+        <SolidColorBrush x:Key="Surface"     Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BgLight"     Color="#F4F4F4"/>
+        <SolidColorBrush x:Key="RowHover"    Color="#EFF6FC"/>
+
+        <!-- Botão primário -->
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Accent}"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Padding"         Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentPress}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#A0A0A0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botão secundário -->
+        <Style x:Key="BtnSecondary" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Surface}"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMain}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource LineBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Padding"         Value="20,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#EBEBEB"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#DEDEDE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botão inline -->
+        <Style x:Key="BtnInline" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource Surface}"/>
+            <Setter Property="Foreground"      Value="{StaticResource Accent}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource Accent}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize"        Value="12"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Padding"         Value="12,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#EFF6FC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#DCEEFB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TabItem -->
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="Padding"    Value="16,10"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border x:Name="Bd"
+                                    Padding="{TemplateBinding Padding}"
+                                    Background="Transparent">
+                                <TextBlock x:Name="Lbl"
+                                           Text="{TemplateBinding Header}"
+                                           Foreground="{StaticResource TextMuted}"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                            <Border x:Name="Bar"
+                                    Height="2"
+                                    VerticalAlignment="Bottom"
+                                    Background="{StaticResource Accent}"
+                                    Visibility="Collapsed"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Lbl" Property="Foreground" Value="{StaticResource Accent}"/>
+                                <Setter TargetName="Lbl" Property="FontWeight" Value="SemiBold"/>
+                                <Setter TargetName="Bar" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#EBEBEB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TabControl -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background"      Value="{StaticResource Surface}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    Background="{StaticResource Surface}"
+                                    BorderBrush="{StaticResource LineBorder}"
+                                    BorderThickness="0,0,0,1">
+                                <TabPanel IsItemsHost="True" Background="Transparent"/>
+                            </Border>
+                            <Border Grid.Row="1"
+                                    Background="{StaticResource Surface}"
+                                    Padding="16,14">
+                                <ContentPresenter ContentSource="SelectedContent"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox readonly -->
+        <Style x:Key="TxtReadonly" TargetType="TextBox">
+            <Setter Property="Background"      Value="#F4F4F4"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource LineBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="8,6"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMain}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background"               Value="{StaticResource Surface}"/>
+            <Setter Property="BorderThickness"          Value="0"/>
+            <Setter Property="GridLinesVisibility"      Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EBEBEB"/>
+            <Setter Property="RowHeight"                Value="34"/>
+            <Setter Property="FontSize"                 Value="13"/>
+            <Setter Property="Foreground"               Value="{StaticResource TextMain}"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background"      Value="#F4F4F4"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextMuted}"/>
+            <Setter Property="FontSize"        Value="11"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Padding"         Value="10,7"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource LineBorder}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource RowHover}"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#D0E7F8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+            <Setter Property="Cursor"     Value="Hand"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BgLight}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <Border Grid.Row="0"
+                Background="{StaticResource Surface}"
+                BorderBrush="{StaticResource LineBorder}"
+                BorderThickness="0,0,0,1"
+                Padding="20,14">
+            <StackPanel>
+                <TextBlock Text="Exportar PDF"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextMain}"/>
+                <TextBlock Text="Selecione as folhas, configure a nomenclatura e o destino de saída."
+                           FontSize="12"
+                           Foreground="{StaticResource TextMuted}"
+                           Margin="0,3,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- TabControl -->
+        <TabControl Grid.Row="1" Margin="16,12,16,0">
+
+            <TabItem Header="Seleção e Nome">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0" Margin="0,0,0,8">
+                            <TextBlock DockPanel.Dock="Left"
+                                       Text="Folhas disponíveis"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextMain}"
+                                       VerticalAlignment="Center"/>
+                            <CheckBox DockPanel.Dock="Right"
+                                      HorizontalAlignment="Right"
+                                      Content="Selecionar todas"
+                                      IsChecked="{Binding SelectAllSheets}"
+                                      FontSize="12"
+                                      Foreground="{StaticResource TextMuted}"
+                                      VerticalAlignment="Center"/>
+                        </DockPanel>
+
+                        <Border Grid.Row="1"
+                                BorderBrush="{StaticResource LineBorder}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                ClipToBounds="True">
+                            <DataGrid ItemsSource="{Binding Sheets}"
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      HeadersVisibility="Column"
+                                      SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Header="Exportar"
+                                                            Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                                            Width="64"/>
+                                    <DataGridTextColumn Header="Número"
+                                                        Binding="{Binding Number}"
+                                                        Width="90"
+                                                        IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Nome da Folha"
+                                                        Binding="{Binding Name}"
+                                                        Width="*"
+                                                        IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="1"
+                            Background="#F9F9F9"
+                            BorderBrush="{StaticResource LineBorder}"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Padding="14,12"
+                            Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Padrão de nomenclatura"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,8"
+                                       Foreground="{StaticResource TextMain}"/>
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding NamingRuleText}"
+                                         IsReadOnly="True"
+                                         Style="{StaticResource TxtReadonly}"
+                                         Margin="0,0,8,0"
+                                         VerticalAlignment="Center"/>
+                                <Button Grid.Column="1"
+                                        Content="Configurar..."
+                                        Style="{StaticResource BtnInline}"
+                                        Command="{Binding OpenNamingConfigCommand}"/>
+                            </Grid>
+                            <TextBlock Text="Prévia:"
+                                       FontSize="11"
+                                       Foreground="{StaticResource TextMuted}"
+                                       Margin="0,0,0,4"/>
+                            <Border Background="White"
+                                    BorderBrush="{StaticResource LineBorder}"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="10,7">
+                                <TextBlock Text="{Binding FileNamePreview}"
+                                           FontSize="13"
+                                           FontFamily="Consolas"
+                                           Foreground="{StaticResource Accent}"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Destino e Resumo">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,16">
+                        <TextBlock Text="Pasta de destino"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,8"
+                                   Foreground="{StaticResource TextMain}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding OutputPath}"
+                                     IsReadOnly="True"
+                                     Style="{StaticResource TxtReadonly}"
+                                     Margin="0,0,8,0"
+                                     VerticalAlignment="Center"/>
+                            <Button Grid.Column="1"
+                                    Content="Procurar..."
+                                    Style="{StaticResource BtnInline}"
+                                    Command="{Binding BrowseCommand}"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <TextBlock Text="Resumo da exportação"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,8"
+                                   Foreground="{StaticResource TextMain}"/>
+                        <Border Background="#F9F9F9"
+                                BorderBrush="{StaticResource LineBorder}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Padding="12">
+                            <TextBlock Text="{Binding SummaryText}"
+                                       TextWrapping="Wrap"
+                                       LineHeight="22"
+                                       Foreground="{StaticResource TextMain}"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Rodapé -->
+        <Border Grid.Row="2"
+                Background="{StaticResource Surface}"
+                BorderBrush="{StaticResource LineBorder}"
+                BorderThickness="0,1,0,0"
+                Padding="16,12"
+                Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar"
+                        Style="{StaticResource BtnSecondary}"
+                        Margin="0,0,8,0"
+                        Command="{Binding CancelCommand}"/>
+                <Button Content="Confirmar Exportação"
+                        Style="{StaticResource BtnPrimary}"
+                        Command="{Binding ExportCommand}"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>
